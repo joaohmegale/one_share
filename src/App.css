@@ -1,38 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Mooli&display=swap');
+
+/* Home page */
 .App {
-  text-align: center;
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  padding-top: 0px;
+  flex-direction: column;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+img {
+  border-radius: 4px;
+  margin-left: 10px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.post {
+  width: 400px;
+  height: 300px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
+  margin-top: 50px;
+  border: 1px solid lightgray;
+  font-family: Arial, Helvetica, sans-serif;
+
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.post:hover {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  cursor: pointer;
+}
+
+.post .title {
+  flex: 20%;
+  border-bottom: 1px solid lightgray;
+  background-color: #2E1760;
+  display: grid;
+  place-content: center;
+  color: white;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+
+.post .body {
+  flex: 60%;
+  display: grid;
+  place-content: center;
+}
+
+.post .footer {
+  flex: 20%;
+  border-top: 1px solid lightgray;
+  display: flex;
   align-items: center;
+  padding-left: 15px;
+  background-color: #2E1760;
+  color: white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/*CreatePost CSS */
+
+.createPostPage {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 100vw;
+  height: 70vh;
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 500px;
+  height: auto;
+  padding: 20px;
+  border: 5px solid #2E1760;
+  border-radius: 5px;
+  margin-top: 100px;
+}
+
+.formContainer #inputCreatePost {
+  height: 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 2px solid grey;
+  border-radius: 5px;
+  padding-left: 10px;
+  font-size: 20px;
+}
+
+.formContainer button {
+  margin-top: 15px;
+  height: 40px;
+  border: none;
+  background-color: lightskyblue;
+  border-radius: 5px;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.formContainer button:hover {
+  cursor: pointer;
+  background-color: #2E1760;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.formContainer h1{
+  display: flex;
+  justify-content: center;
+  color: black;
+  font-family: 'Mooli', sans-serif;
+}
+
+span {
+  color: red;
+}
+
+/* NavBar */
+.navbar {
+  width: 100%;
+  height: 70px;
+  background-color: #2E1760;
+  display: flex;
+  align-items: center;
+  font-family: 'Mooli', sans-serif;
+  justify-content: space-between;
+}
+
+.navbarLinks {
+  display: flex;
+  align-items: center;
+}
+
+.navbar a {
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+}
+
+.navbar h2 {
+  color: white;
+  margin-right: 25px;
+}
+
+/*Post Page*/
+
+* {
+  box-sizing: border-box;
+}
+
+.postPage {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.leftSide {
+  flex: 50%;
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+
+#individual {
+  height: 400px;
+  width: 400px;
+}
+
+#individual .title,
+#individual .footer {
+  font-size: 30px;
+}
+
+#individual .body {
+  font-size: 25px;
+}
+
+.rightSide {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.commentContainer input {
+  width: 400px;
+  height: 50px;
+  border-radius: 8px;
+  border: none;
+}
+
+.commentContainer input {
+  margin-top: 50px;
+}
+
+.commentContainer button {
+  background-color: #2E1760;
+  color: white;
+  cursor: pointer;
+  width: 80px;
+  height: 80px;
+}
+
+.commentContainer input {
+  border: 2px solid grey;
+}
+
+.rightSide .commentList {
+  flex: 50%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.commentList .comment {
+  width: 400px;
+  height: auto;
+  padding: 30px;
+  border: 2px solid grey;
+  border-radius: 5px;
+  margin-top: 20px;
+  position: relative;
+}
+
+.comment label{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+/*login*/
+
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 300px;
+  margin-top: 100px;
+  background-color: #2E1760;
+  border-radius: 8px;
+
+}
+
+.loginContainer h1{
+  color: white;
+  font-family: 'Mooli', sans-serif;
+}
+
+.loginContainer input,
+button {
+  padding: 10px;
+  margin: 10px;
+  width: 300px;
+  height: 50px;
+  border-radius: 8px;
+  border: 2px solid gray;
+}
+
+.loginContainer button {
+  cursor: pointer;
 }
