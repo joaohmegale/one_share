@@ -1,46 +1,35 @@
 import React from 'react'
-import { useState, useCallback } from 'react';
-// import axios from 'axios';
+import { useState } from 'react';
+import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { login as loginProcess, getInfo } from '../processes/session';
-
 
 function Login() {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
-  //const [newUsername, setnewUsername] = useState('');
   const [password, setPassword] = useState('');
-  //const [newPassword, setnewPassword] = useState('');
 
-  const login = useCallback(async () => {
-    console.log('esta clicando');
-    const data = { username, password };
+  const login = () => {
+    const data = { username: username, password: password };
 
-    const { payload } = await dispatch(loginProcess(data));
-
-    if(payload){
-      await dispatch(getInfo()); 
-
-      navigate('/');
-    }else {
-      toast.error('Login failed');
-    }
-  }, [dispatch, username, password]); 
-
-    // axios.post("http://localhost:3001/auth/login", data).then((response) => {
-    //   if (response.data.error) {
-    //     toast.error(response.data.error);
-    //   }else{
-    //     localStorage.setItem('accessToken', response.data);
-    //     toast.success('Usuario logado com sucesso');
-    //     navigate('/');
-    //   }
-    // });
-  
+    axios.post("http://localhost:3001/auth/login", data).then((response) => {
+      if (response.data.error) {
+        toast.error(response.data.error);
+      } else {
+        localStorage.setItem('accessToken', response.data.accessToken);
+        localStorage.setItem('infosUser', response.data.user.username);
+        dispatch({
+          type: 'LOGIN',
+          id: response.data.user.id,
+          username: response.data.user.username,
+        });
+        toast.success('Usuario logado com sucesso');
+        navigate('/');
+      }
+    });
+  }
 
   return (
     <div>
@@ -54,4 +43,4 @@ function Login() {
   )
 }
 
-export default Login;
+export default Login

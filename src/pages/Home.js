@@ -2,22 +2,30 @@ import React from 'react'
 import axios from 'axios';
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function Home() {
   const [listOfPosts, setListOfPosts] = useState([]);
   const endOfPosts = useRef();
   const navigate = useNavigate();
+  const { isLoggedIn } = useSelector(state => state);
 
 
   useEffect(() => {
-    axios.get('http://localhost:3001/posts').then((response) => {
-      setListOfPosts(response.data);
-    });
-  }, []);
 
-  // useEffect(() => {
-  //   endOfPosts.current?.scrollIntoView({ behavior: 'smooth' });
-  // }, [listOfPosts])
+    if (isLoggedIn) {
+      axios.get('http://localhost:3001/posts').then((response) => {
+        setListOfPosts(response.data);
+      });
+    } else {
+      navigate('/login');
+    }
+  }
+    , []);
+
+  useEffect(() => {
+    endOfPosts.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [listOfPosts])
 
   return (
     <div>
@@ -35,4 +43,4 @@ function Home() {
   )
 }
 
-export default Home
+export default Home;

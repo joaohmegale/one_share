@@ -4,16 +4,27 @@ import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 function CreatePost() {
-
+  const { isLoggedIn, username } = useSelector(state => state);
   const navigate = useNavigate();
+
+  useEffect((() => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    }
+  }), [])
+
+  if (!isLoggedIn) {
+    navigate('/login');
+  } else { }
 
   const initialValues = {
     title: "",
     postText: "",
-    username: "",
+    username: username,
   }
 
   const validationSchema = Yup.object({
@@ -23,27 +34,27 @@ function CreatePost() {
   })
 
   const onSubmit = (data) => {
-    axios.post("http://localhost:3001/posts", data).then(
+    axios.post("http://localhost:3001/posts", data, {
+      headers: {
+        accessToken: localStorage.getItem('accessoken'),
+      }
+    }).then(
+      toast.success('Post criado com sucesso'),
       navigate('/')
     ).catch((error) => {
       console.log(error);
     });
-    toast.success('Post criado com sucesso');
   };
 
   return (
     <div className='createPostPage'>
       <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
         <Form className='formContainer'>
-          <label>Title:</label>
+          <h1>Create a post</h1>
           <ErrorMessage name='titles' component="span" />
-          <Field autoComplete="off" id="inputCreatePost" name="title" placeholder="(Title...)" />
-          <label>Post:</label>
+          <Field autoComplete="off" id="inputCreatePost" name="title" placeholder="Title..." />
           <ErrorMessage name='post' component="span" />
-          <Field autoComplete="off" id="inputCreatePost" name="postText" placeholder="(Text...)" />
-          <label>Username:</label>
-          <ErrorMessage name='username' component="span" />
-          <Field autoComplete="off" id="inputCreatePost" name="username" placeholder="(Username...)" />
+          <Field autoComplete="off" id="inputCreatePost" name="postText" placeholder="Text..." />
           <button type='submit'>Create Post</button>
         </Form>
       </Formik>

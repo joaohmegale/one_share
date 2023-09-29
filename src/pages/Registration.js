@@ -3,9 +3,11 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 
 function Registration() {
+  const navigate = useNavigate();
 
   const initialValues = {
     username: "",
@@ -21,6 +23,7 @@ function Registration() {
     axios.post("http://localhost:3001/auth", data).then((response) => {
       if (response.data.type === "success") {
         toast.success('Registro feito com sucesso');
+        navigate('/login')
       } else {
         toast.error('Usuario ja existente');
       }
@@ -28,16 +31,18 @@ function Registration() {
   };
 
   return (
-    <div><Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-      <Form className='formContainer'>
-        <h1>Registration</h1>
-        <ErrorMessage name='username' component="span" />
-        <Field autoComplete="off" id="inputCreatePost" name="username" placeholder="Username..." />
-        <ErrorMessage name='password' component="span" />
-        <Field type="password" autoComplete="off" id="inputCreatePost" name="password" placeholder="password..." />
-        <button type='submit'>Register</button>
-      </Form>
-    </Formik></div>
+    <div>
+      <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+        <Form className='formContainer'>
+          <h1>Registration</h1>
+          <ErrorMessage name='username' component="span" />
+          <Field autoComplete="off" id="inputCreatePost" name="username" placeholder="Username..." />
+          <ErrorMessage name='password' component="span" />
+          <Field type="password" autoComplete="off" id="inputCreatePost" name="password" placeholder="password..." />
+          <button type='submit'>Register</button>
+        </Form>
+      </Formik>
+    </div>
   )
 }
 
