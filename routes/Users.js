@@ -44,15 +44,20 @@ router.post('/login', async (req, res) => {
       const accessToken = sign({ username: user.username, id: user.id },
         "importantsecret"
       );
-      return res.json(accessToken);
+      return res.json({
+        accessToken,
+        user: {
+          username: user.username,
+          id: user.id,
+        }
+      });
     }
   });
 });
 
-router.get('/info', validateToken, async (req, res) => {
-  const user = req.user.validToken;
-  console.log(user);
-  return res.json(user);
+router.get('/', validateToken, async (req, res) => {
+  res.json(req.user);
 });
 
 module.exports = router;
+

@@ -1,25 +1,21 @@
 const { verify } = require('jsonwebtoken')
 
 const validateToken = (req, res, next) => {
-  console.log(req.header)
-  console.log(req.headers.authorization);
-  const bearerToken = req.headers.authorization.split(' ')[1];
-  console.log(bearerToken, 'bearerToken')
+  const accessToken = req.header('accessToken');
 
-  if (!bearerToken) {
+  if (!accessToken) {
     return res.json({ error: "Usuario nao logado!" });
   }
   try {
-    const validToken = verify(bearerToken, "importantsecret");
-    console.log(validToken, 'validToken')
-    req.user = {validToken};
+    const validToken = verify(accessToken, "importantsecret");
+    req.user = { validToken };
     if (validToken) {
       return next();
     }
   } catch (error) {
-    return res.json({error: error});
+    return res.json({ error: error });
   }
 
 };
 
-module.exports = {validateToken};
+module.exports = { validateToken };

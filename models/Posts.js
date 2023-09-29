@@ -14,10 +14,15 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  Posts.associate = (models) =>{
-    Posts.hasMany(models.Comments,{
+  Posts.associate = (models) => {
+    Posts.hasMany(models.Comments, {
+      onDelete: 'cascade',
+    });
+
+    Posts.hasMany = (models.Likes, {
       onDelete: 'cascade',
     });
   };
+
   return Posts;
 }
